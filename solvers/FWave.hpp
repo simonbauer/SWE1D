@@ -52,23 +52,29 @@ public:
 		qr.h = hr;
 		qr.hu = hur;
 		outhl = outhr = outhul = outhur  = 0;
+
 		outmaxWS = 0;
 
-		//hl must not be NaN
-		assert(hl != hl);
-
-		T lambda1 = computeWavespeed(ql, qr, -1.0f);
-		T lambda2 = computeWavespeed(ql, qr, 1.0f);
+		//compute Wavespeeds lambda. Equation (3)
+		T h = computeHeightRoe(ql, qr);
+		T u = computeVeloRoe(ql, qr);
+		T lambda1 = u - std::sqrt(g * h);
+		T lambda2 = u + std::sqrt(g * h);
 
 
 		//Compute eigencoefficients [a_1 , a_2]  (Formula (8))
 		T ec[2];
 		computeEigencoeff(ql, qr, lambda1, lambda2, ec);
 
+
+
 		//Compute wave Z1 and Z2  (Formula (6))
 		T z1[2], z2[2];
 		computeWaveZ(ec[0], lambda1, z1);
 		computeWaveZ(ec[1], lambda2, z2);
+
+		//std::cout<< "ZWave1: z1[0]=" << z1[0]<< ", z1[1]=" << z1[1]<< "\n";
+		//std::cout<< "ZWave2: z2[0]=" << z2[0]<< ", z2[1]=" << z2[1]<< "\n";
 
 		if(lambda1 > 0){
 			outhr += z1[0];
@@ -77,6 +83,7 @@ public:
 			outhl += z1[0];
 			outhul += z1[1];
 		}
+
 		if(lambda2 > 0){
 			outhr += z2[0];
 			outhur += z2[1];
@@ -85,28 +92,12 @@ public:
 			outhul += z2[1];
 		}
 
+		outmaxWS = std::max( std::fabs(lambda1) , std::fabs(lambda2) );
+
 
 	};
 
 private:
-
-	/**
-	 * Approximate the true wave speeds using the data of left and right cell. (Formula (3))
-	 *
-	 * @param ql Quantity [h, (hu)T] of left cell
-	 * @param qr Quantity [h, (hu)T] of right cell
-	 * @param signum Determines whether the second part of the term u(ql,qr) +- sqrt(gh(ql,qr)) will be substracted or added.
-	 * @return Wavespeed lambda_1 or lambda_2 (depending on signum > 0 or signum < 0)
-	 */
-	T computeWavespeed(Quantity &ql,Quantity &qr, float signum) {
-		T sgn = 0;
-		if (signum > 0.0f) {
-			sgn = 1.0f;
-		} else if (signum < 0.0f) {
-			sgn = -1.0f;
-		}
-		return computeVeloRoe(ql, qr) + sgn * std::sqrt(g * computeHeightRoe(ql, qr));
-	};
 
 	/**
 	 * Compute height h(hl,hr) = 0.5(hl + hr). (Formula (4))
@@ -143,7 +134,7 @@ private:
 	 * @param lambda2 Wavespeed 2
 	 * @return T array of size 2, contains eigencoefficients a_1 and a_2
 	 */
-	void computeEigencoeff(Quantity &ql, Quantity &qr, T &lambda1, T &lambda2, T out[2]){
+	void computeEigencoeff(Quantity &ql, Quantity &qr, T lambda1, T lambda2, T out[2]){
 		T fqr[2], fql[2];
 		flux(qr, fqr);
 		flux(ql, fql);
@@ -166,8 +157,9 @@ private:
 	 * @return T array of size 2, contains [hu, hu^2 + 0.5*g*h^2]^T
 	 */
 	void flux(Quantity q, T out[2]){
+		T u = q.hu / q.h;
 		out[0] = q.hu;
-		out[1] = q.hu * q.hu + 0.5f * g * q.h * q.h;
+		out[1] = q.h * (u * u) + 0.5f * g * q.h * q.h;
 	};
 
 	/**
