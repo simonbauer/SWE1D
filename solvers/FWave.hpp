@@ -5,11 +5,15 @@
  *      Author: kyu
  */
 
+
+
 #ifndef FWAVE_HPP_
 #define FWAVE_HPP_
 
 #include <cassert>
 #include <cmath>
+#include <iostream>
+
 
 namespace solver {
   template <typename T> class FWave;
@@ -17,14 +21,13 @@ namespace solver {
 
 template <typename T> class solver::FWave {
 public:
-	FWave();
-	virtual ~FWave();
+	FWave(){}
 
-	typedef struct Quantity {
+	struct Quantity {
 		T h;
 		T hu;
 	};
-	static T g = 9.81f;
+	static const T g = 9.81f;
 
 	 /**
 	  * Compute left and right going net-updates.
@@ -42,25 +45,30 @@ public:
 	  * @param outhur output momentum of the cell on the right side of the edge.
 	  * @param outmaxWS will be set to: Maximum (linearized) wave speed -> Should be used in the CFL-condition.
 	  */
-	void computeNetupdates(T hl, T hr, T hul, T hur, T bl, T br, T &outhl, T &outhr, T &outhul, T &outhur, T &outmaxWS) {
+	void computeNetUpdates(const T &hl, const T &hr, const T &hul, const T &hur, const T &bl, const T &br, T &outhl, T &outhr, T &outhul, T &outhur, T &outmaxWS) {
 		struct Quantity ql, qr;
 		ql.h = hl;
 		ql.hu = hul;
 		qr.h = hr;
 		qr.hu = hur;
-
 		outhl = outhr = outhul = outhur  = 0;
 		outmaxWS = 0;
 
-		T lambda1 = computeWavespeed(&ql, &qr, -1.0f);
-		T lambda2 = computeWavespeed(&ql, &qr, 1.0f);
+		//hl must not be NaN
+		assert(hl != hl);
+
+		T lambda1 = computeWavespeed(ql, qr, -1.0f);
+		T lambda2 = computeWavespeed(ql, qr, 1.0f);
+
 
 		//Compute eigencoefficients [a_1 , a_2]  (Formula (8))
-		T* ec[2] = computeEigencoeff(ql, qr, lambda1, lambda2);
+		T ec[2];
+		computeEigencoeff(ql, qr, lambda1, lambda2, ec);
 
 		//Compute wave Z1 and Z2  (Formula (6))
-		T* z1[2] = computeWaveZ(ec[0], lambda1);
-		T* z2[2] = computeWaveZ(ec[1], lambda2);
+		T z1[2], z2[2];
+		computeWaveZ(ec[0], lambda1, z1);
+		computeWaveZ(ec[1], lambda2, z2);
 
 		if(lambda1 > 0){
 			outhr += z1[0];
@@ -78,7 +86,7 @@ public:
 		}
 
 
-	}
+	};
 
 private:
 
@@ -90,15 +98,15 @@ private:
 	 * @param signum Determines whether the second part of the term u(ql,qr) +- sqrt(gh(ql,qr)) will be substracted or added.
 	 * @return Wavespeed lambda_1 or lambda_2 (depending on signum > 0 or signum < 0)
 	 */
-	T computeWavespeed(Quantity *ql,Quantity *qr, float signum) {
-		int sgn = 0;
+	T computeWavespeed(Quantity &ql,Quantity &qr, float signum) {
+		T sgn = 0;
 		if (signum > 0.0f) {
-			sgn = 1;
+			sgn = 1.0f;
 		} else if (signum < 0.0f) {
-			sgn = -1;
+			sgn = -1.0f;
 		}
 		return computeVeloRoe(ql, qr) + sgn * std::sqrt(g * computeHeightRoe(ql, qr));
-	}
+	};
 
 	/**
 	 * Compute height h(hl,hr) = 0.5(hl + hr). (Formula (4))
@@ -107,9 +115,9 @@ private:
 	 * @param qr Quantity [h, (hu)T] of right cell
 	 * @return Height h_Roe
 	 */
-	T computeHeightRoe(Quantity *ql, Quantity *qr) {
-		return 0.5 * (ql->h + qr->h);
-	}
+	T computeHeightRoe(Quantity &ql, Quantity &qr) {
+		return (T)0.5 * (ql.h + qr.h);
+	};
 
 	/**
 	 *                            (ul * sqrt(hl) + ur * sqrt(hr))
@@ -120,11 +128,11 @@ private:
 	 * @param qr Quantity [h, (hu)T] of right cell
 	 * @return Velocity u_Roe
 	 */
-	T computeVeloRoe(Quantity *ql,Quantity *qr) {
-		T ul = ql->hu / ql->h;
-		T ur = qr->hu / qr->h;
-		return (ul * std::sqrt(ql->h) + ur * std::sqrt(qr->h)) / (std::sqrt(ql->h) + std::sqrt(qr->h));
-	}
+	T computeVeloRoe(Quantity &ql,Quantity &qr) {
+		T ul = ql.hu / ql.h;
+		T ur = qr.hu / qr.h;
+		return (ul * std::sqrt(ql.h) + ur * std::sqrt(qr.h)) / (std::sqrt(ql.h) + std::sqrt(qr.h));
+	};
 
 	/**
 	 *  Compute the eigencoefficients a_p by using the wavespeeds and the flux formula. (Formula (8))
@@ -135,20 +143,21 @@ private:
 	 * @param lambda2 Wavespeed 2
 	 * @return T array of size 2, contains eigencoefficients a_1 and a_2
 	 */
-	T* computeEigencoeff(Quantity* ql, Quantity* qr, T lambda1, T lambda2){
-		T* fqr = flux(qr);
-		T* fql = flux(ql);
+	void computeEigencoeff(Quantity &ql, Quantity &qr, T &lambda1, T &lambda2, T out[2]){
+		T fqr[2], fql[2];
+		flux(qr, fqr);
+		flux(ql, fql);
 
-		T dFlux[2] = { fqr[0]-fql[0], fqr[1]-fql[1] };
+		T dFlux[] = { fqr[0]-fql[0], fqr[1]-fql[1] };
 
 		T mat[2][2] = { {1.0f, 1.0f}, {lambda1, lambda2}};
 
 		inverseMatrix(mat);
-		T a[2] = { mat[0][0] * dFlux[0] + mat[0][1] * dFlux[1],
-					mat[1][0] * dFlux[0] + mat[1][1] * dFlux[1]};
 
-		return a;
-	}
+		out[0] = mat[0][0] * dFlux[0] + mat[0][1] * dFlux[1];
+		out[1] = mat[1][0] * dFlux[0] + mat[1][1] * dFlux[1];
+
+	};
 
 	/**
 	 *  Evaluating the flux formula f = [hu, hu^2 + 0.5*g*h^2]^T
@@ -156,36 +165,36 @@ private:
 	 * @param q Quantity to be used for the flux calculation
 	 * @return T array of size 2, contains [hu, hu^2 + 0.5*g*h^2]^T
 	 */
-	T* flux(Quantity* q){
-		T tmp[2] = { q->hu, q->hu * q->hu + 0.5f * g * q->h * q->h};
-		return tmp;
-	}
+	void flux(Quantity q, T out[2]){
+		out[0] = q.hu;
+		out[1] = q.hu * q.hu + 0.5f * g * q.h * q.h;
+	};
 
 	/**
-	 *  Inverts a given matrix
+	 *  Inverts a given 2x2 matrix
 	 *
 	 * @param m 2x2 Matrix to be inverted and also the one in which the result will be stored.
 	 */
-	void inverseMatrix(T* m){
+	void inverseMatrix(T m[2][2]){
 		T a = m[0][0];
 		T b = m[0][1];
 		T c = m[1][0];
 		T d = m[1][1];
 
 		T det = (a*d - b*c);
-
+		//assert(det != 0);
 
 		m[0][0] = (1.0f / det) * d;
-		m[0][1] = (1.0f / det) * -b;
-		m[1][0] = (1.0f / det) * -c;
+		m[0][1] = (1.0f / det) * (-b);
+		m[1][0] = (1.0f / det) * (-c);
 		m[1][1] = (1.0f / det) * a;
 
-	}
+	};
 
-	T* computeWaveZ(T ec, T lambda){
-		T* out[2] = {ec, ec*lambda};
-		return out;
-	}
+	void computeWaveZ(T ec, T lambda, T out[2]){
+		out[0] = ec;
+		out[1] = ec*lambda;
+	};
 
 };
 
