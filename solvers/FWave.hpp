@@ -61,6 +61,11 @@ public:
 		T lambda1 = u - std::sqrt(g * h);
 		T lambda2 = u + std::sqrt(g * h);
 
+		if(lambda1 < 0 && lambda2 < 0){
+			lambda2 = (T)0;
+		}else if(lambda1 > 0 && lambda2 > 0){
+			lambda1 = (T)0;
+		}
 
 		//Compute eigencoefficients [a_1 , a_2]  (Formula (8))
 		T ec[2];
@@ -73,8 +78,6 @@ public:
 		computeWaveZ(ec[0], lambda1, z1);
 		computeWaveZ(ec[1], lambda2, z2);
 
-		//std::cout<< "ZWave1: z1[0]=" << z1[0]<< ", z1[1]=" << z1[1]<< "\n";
-		//std::cout<< "ZWave2: z2[0]=" << z2[0]<< ", z2[1]=" << z2[1]<< "\n";
 
 		if(lambda1 > 0){
 			outhr += z1[0];
@@ -174,7 +177,7 @@ private:
 		T d = m[1][1];
 
 		T det = (a*d - b*c);
-		//assert(det != 0);
+		assert(det != 0);
 
 		m[0][0] = (1.0f / det) * d;
 		m[0][1] = (1.0f / det) * (-b);

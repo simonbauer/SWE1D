@@ -18,19 +18,19 @@ public:
 	solver::FWave<T> fwave;
 
 	FWaveTest() {
-		fwave = new solver::FWave();
+		//fwave = new solver::FWave();
 	}
 
-	virtual ~FWaveTest() {
+	/*virtual ~FWaveTest() {
 		fwave = NULL;
-	}
+	}*/
 
 	void testSameHeightNoSpeed(void) {
 		T startHeight = 5.0f;
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(startHeight, startHeight, 0.0f, 0.0f, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(startHeight, startHeight, 0.0f, 0.0f, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -46,7 +46,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -62,7 +62,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -78,7 +78,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -94,7 +94,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -111,7 +111,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -128,7 +128,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -145,7 +145,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -162,7 +162,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -179,7 +179,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -196,7 +196,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -213,7 +213,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -230,7 +230,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -247,7 +247,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
@@ -264,7 +264,7 @@ public:
 
 		T hl, hr, hul, hur, maxWS;
 
-		fwave.computeNetupdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
+		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
 		TS_ASSERT_EQUALS(hl, 0.0f);
 		TS_ASSERT_EQUALS(hr, 0.0f);
