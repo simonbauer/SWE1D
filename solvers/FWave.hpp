@@ -52,7 +52,7 @@ public:
 		qr.h = hr;
 		qr.hu = hur;
 
-		//Waterheight should be always above the ground and h != 0 to prevent division by 0
+		//waterheight should be always above the ground and h != 0 to prevent division by 0
 		assert(ql.h > 0 && qr.h > 0);
 
 		outhl = outhr = outhul = outhur  = 0;
