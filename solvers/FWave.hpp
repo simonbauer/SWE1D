@@ -32,18 +32,18 @@ public:
 	 /**
 	  * Compute left and right going net-updates.
 	  *
-	  * @param hl height on the left side of the edge.
-	  * @param hr height on the right side of the edge.
-	  * @param hul momentum on the left side of the edge.
-	  * @param hur momentum on the right side of the edge.
-	  * @param bl bathymetry on the left side of the edge.
-	  * @param br bathymetry on the right side of the edge.
+	  * @param &hl height on the left side of the edge.
+	  * @param &hr height on the right side of the edge.
+	  * @param &hul momentum on the left side of the edge.
+	  * @param &hur momentum on the right side of the edge.
+	  * @param &bl bathymetry on the left side of the edge.
+	  * @param &br bathymetry on the right side of the edge.
 	  *
-	  * @param outhl output height of the cell on the left side of the edge.
-	  * @param outhr output height of the cell on the right side of the edge.
-	  * @param outhul output momentum of the cell on the left side of the edge.
-	  * @param outhur output momentum of the cell on the right side of the edge.
-	  * @param outmaxWS will be set to: Maximum (linearized) wave speed -> Should be used in the CFL-condition.
+	  * @param &outhl output height of the cell on the left side of the edge.
+	  * @param &outhr output height of the cell on the right side of the edge.
+	  * @param &outhul output momentum of the cell on the left side of the edge.
+	  * @param &outhur output momentum of the cell on the right side of the edge.
+	  * @param &outmaxWS will be set to: Maximum (linearized) wave speed -> Should be used in the CFL-condition.
 	  */
 	void computeNetUpdates(const T &hl, const T &hr, const T &hul, const T &hur, const T &bl, const T &br, T &outhl, T &outhr, T &outhul, T &outhur, T &outmaxWS) {
 		struct Quantity ql, qr;
@@ -51,16 +51,21 @@ public:
 		ql.hu = hul;
 		qr.h = hr;
 		qr.hu = hur;
+
+		//Waterheight should be always above the ground and h != 0 to prevent division by 0
+		assert(ql.h > 0 && qr.h > 0);
+
 		outhl = outhr = outhul = outhur  = 0;
 
 		outmaxWS = 0;
 
 		//compute Wavespeeds lambda. Equation (3)
-		T h = computeHeightRoe(ql, qr);
+		T h = std::sqrt(g * computeHeightRoe(ql, qr));
 		T u = computeVeloRoe(ql, qr);
-		T lambda1 = u - std::sqrt(g * h);
-		T lambda2 = u + std::sqrt(g * h);
+		T lambda1 = u - h;
+		T lambda2 = u + h;
 
+		//Formula (9)
 		if(lambda1 < 0 && lambda2 < 0){
 			lambda2 = (T)0;
 		}else if(lambda1 > 0 && lambda2 > 0){
@@ -78,7 +83,7 @@ public:
 		computeWaveZ(ec[0], lambda1, z1);
 		computeWaveZ(ec[1], lambda2, z2);
 
-
+		//Formula (7)
 		if(lambda1 > 0){
 			outhr += z1[0];
 			outhur += z1[1];
@@ -105,8 +110,8 @@ private:
 	/**
 	 * Compute height h(hl,hr) = 0.5(hl + hr). (Formula (4))
 	 *
-	 * @param ql Quantity [h, (hu)T] of left cell
-	 * @param qr Quantity [h, (hu)T] of right cell
+	 * @param &ql Quantity [h, (hu)T] of left cell
+	 * @param &qr Quantity [h, (hu)T] of right cell
 	 * @return Height h_Roe
 	 */
 	T computeHeightRoe(Quantity &ql, Quantity &qr) {
@@ -118,8 +123,8 @@ private:
 	 *  Compute height u(hl,hr) = --------------------------------    (Formula (4))
 	 *                                (sqrt(hl) + sqrt(hr))
 	 *
-	 * @param ql Quantity [h, (hu)T] of left cell
-	 * @param qr Quantity [h, (hu)T] of right cell
+	 * @param &ql Quantity [h, (hu)T] of left cell
+	 * @param &qr Quantity [h, (hu)T] of right cell
 	 * @return Velocity u_Roe
 	 */
 	T computeVeloRoe(Quantity &ql,Quantity &qr) {
@@ -131,11 +136,11 @@ private:
 	/**
 	 *  Compute the eigencoefficients a_p by using the wavespeeds and the flux formula. (Formula (8))
 	 *
-	 * @param ql Quantity [h, (hu)T] of left cell
-	 * @param qr Quantity [h, (hu)T] of right cell
+	 * @param &ql Quantity [h, (hu)T] of left cell
+	 * @param &qr Quantity [h, (hu)T] of right cell
 	 * @param lambda1 Wavespeed 1
 	 * @param lambda2 Wavespeed 2
-	 * @return T array of size 2, contains eigencoefficients a_1 and a_2
+	 * @param out[2] output array of size 2, contains eigencoefficients a_1 and a_2
 	 */
 	void computeEigencoeff(Quantity &ql, Quantity &qr, T lambda1, T lambda2, T out[2]){
 		T fqr[2], fql[2];
@@ -157,9 +162,9 @@ private:
 	 *  Evaluating the flux formula f = [hu, hu^2 + 0.5*g*h^2]^T
 	 *
 	 * @param q Quantity to be used for the flux calculation
-	 * @return T array of size 2, contains [hu, hu^2 + 0.5*g*h^2]^T
+	 * @param out[2] output array of size 2, contains [hu, hu^2 + 0.5*g*h^2]^T
 	 */
-	void flux(Quantity q, T out[2]){
+	void flux(Quantity &q, T out[2]){
 		T u = q.hu / q.h;
 		out[0] = q.hu;
 		out[1] = q.h * (u * u) + 0.5f * g * q.h * q.h;
