@@ -47,21 +47,21 @@ class ShockShock
 private:
 	/** Number of cells */
 	const unsigned int m_size;
-	T momentum;
+	T velocity;
 
 
 public:
-	ShockShock(unsigned int size, T momentum)
-		: m_size(size), momentum(momentum)
+	ShockShock(unsigned int size, T velocity)
+		: m_size(size), velocity(velocity)
 	{
 	}
 
 	/**
 	 * @return Initial water height at pos
 	 */
-	unsigned int getHeight(unsigned int pos)
+	T getHeight(unsigned int pos)
 	{
-		return 10;
+		return 100;
 	}
 
 
@@ -72,12 +72,12 @@ public:
 	>>>>>>>>>>>>>>>>>X<<<<<<<<<<<<<<<<<<<<
 
 	 */
-	T getMomentum(unsigned int pos)
+	T getVelocity(unsigned int pos)
 	{
 		if (pos <= m_size/2)
-			return momentum;
+			return velocity;
 
-		return -momentum;
+		return -velocity;
 	}
 
 
