@@ -9,12 +9,13 @@
 #define FWAVETEST_H_
 
 #include <cxxtest/TestSuite.h>
-#include "types.h"
+#include "../../TsunamiOriginal/SWE1D/src/types.h"
 #include "FWave.hpp"
 
 class FWaveTest : public CxxTest::TestSuite
 {
 public:
+	static const T delta = 0.0001f;
 	solver::FWave<T> fwave;
 
 	FWaveTest() {
@@ -48,11 +49,11 @@ public:
 
 		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -0.5356f, delta);
+		TS_ASSERT_DELTA(hr, 4.0196f, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -0.4643f, delta);
+		TS_ASSERT_DELTA(hur, -3.0196f, delta);
 	}
 
 	void testSameHeightRightSpeed(void) {
@@ -64,11 +65,11 @@ public:
 
 		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -0.4643, delta);
+		TS_ASSERT_DELTA(hr, 3.0196, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -0.5356, delta);
+		TS_ASSERT_DELTA(hur, -4.0196, delta);
 	}
 
 	void testSameHeightLeftRightSpeed(void) {
@@ -80,11 +81,11 @@ public:
 
 		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 2.5356, delta);
+		TS_ASSERT_DELTA(hr, -18.0124, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 2.4643, delta);
+		TS_ASSERT_DELTA(hur, 17.0124, delta);
 	}
 
 	void testSameHeightRightLeftSpeed(void) {
@@ -96,14 +97,14 @@ public:
 
 		fwave.computeNetUpdates(startHeight, startHeight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -2.5356, delta);
+		TS_ASSERT_DELTA(hr, 18.0124, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -2.4643, delta);
+		TS_ASSERT_DELTA(hur, -17.0124, delta);
 	}
 
-	void decreasingHeightNoSpeed(void) {
+	void testDecreasingHeightNoSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
 		T speedLeft = 0.0f;
@@ -113,14 +114,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 21.4439, delta);
+		TS_ASSERT_DELTA(hr, -183.9375, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -21.4439, delta);
+		TS_ASSERT_DELTA(hur, -183.9375, delta);
 	}
 
-	void decreasingHeightLeftSpeed(void) {
+	void testDecreasingHeightLeftSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
 		T speedLeft = -2.0f;
@@ -130,14 +131,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 20.8836, delta);
+		TS_ASSERT_DELTA(hr, -186.7684, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -21.8836, delta);
+		TS_ASSERT_DELTA(hur, -179.7066, delta);
 	}
 
-	void decreasingHeightRightSpeed(void) {
+	void testDecreasingHeightRightSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
 		T speedLeft = 3.0f;
@@ -147,14 +148,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 20.9298, delta);
+		TS_ASSERT_DELTA(hr, -172.3821, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -21.9298, delta);
+		TS_ASSERT_DELTA(hur, -195.5929, delta);
 	}
 
-	void decreasingHeightLeftRightSpeed(void) {
+	void testDecreasingHeightLeftRightSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
 		T speedLeft = -2.0f;
@@ -164,14 +165,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 23.9006, delta);
+		TS_ASSERT_DELTA(hr, -201.8700, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -18.9006, delta);
+		TS_ASSERT_DELTA(hur, -164.6049, delta);
 	}
 
-	void decreasingHeightRightLeftSpeed(void) {
+	void testDecreasingHeightRightLeftSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
 		T speedLeft = 3.0f;
@@ -181,14 +182,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, 18.9468, delta);
+		TS_ASSERT_DELTA(hr, -162.3279, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, -23.9468, delta);
+		TS_ASSERT_DELTA(hur, -205.6470, delta);
 	}
 
-	void increasingHeightNoSpeed(void) {
+	void testIncreasingHeightNoSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
 		T speedLeft = 0.0f;
@@ -198,14 +199,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -21.4439, delta);
+		TS_ASSERT_DELTA(hr, 183.9375, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 21.4439, delta);
+		TS_ASSERT_DELTA(hur, 183.9375, delta);
 	}
 
-	void increasingHeightLeftSpeed(void) {
+	void testIncreasingHeightLeftSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
 		T speedLeft = -3.0f;
@@ -215,14 +216,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -20.8836, delta);
+		TS_ASSERT_DELTA(hr, 186.7684, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 21.8836, delta);
+		TS_ASSERT_DELTA(hur, 179.7066, delta);
 	}
 
-	void increasingHeightRightSpeed(void) {
+	void testIncreasingHeightRightSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
 		T speedLeft = 2.0f;
@@ -232,14 +233,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -20.9298, delta);
+		TS_ASSERT_DELTA(hr, 172.3821, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 21.9298, delta);
+		TS_ASSERT_DELTA(hur, 195.5929, delta);
 	}
 
-	void increasingHeightLeftRightSpeed(void) {
+	void testIncreasingHeightLeftRightSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
 		T speedLeft = -3.0f;
@@ -249,14 +250,14 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -18.9006, delta);
+		TS_ASSERT_DELTA(hr, 164.6049, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 23.9006, delta);
+		TS_ASSERT_DELTA(hur, 201.8700, delta);
 	}
 
-	void increasingHeightRightLeftSpeed(void) {
+	void testIncreasingHeightRightLeftSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
 		T speedLeft = 2.0f;
@@ -266,11 +267,11 @@ public:
 
 		fwave.computeNetUpdates(heightLeft, heightRight, speedLeft, speedRight, 0.0f, 0.0f, hl, hul, hr, hur, maxWS);
 
-		TS_ASSERT_EQUALS(hl, 0.0f);
-		TS_ASSERT_EQUALS(hr, 0.0f);
+		TS_ASSERT_DELTA(hl, -23.9468, delta);
+		TS_ASSERT_DELTA(hr, 205.6470, delta);
 
-		TS_ASSERT_EQUALS(hul, 0.0f);
-		TS_ASSERT_EQUALS(hur, 0.0f);
+		TS_ASSERT_DELTA(hul, 18.9468, delta);
+		TS_ASSERT_DELTA(hur, 162.3279, delta);
 	}
 };
 
