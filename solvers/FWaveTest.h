@@ -15,17 +15,26 @@
 class FWaveTest : public CxxTest::TestSuite
 {
 public:
+	/** Delta used for comparing expected and actual values */
 	static const T delta = 0.0001f;
+
+	/** FWave to test */
 	solver::FWave<T> fwave;
 
 	FWaveTest() {
-		//fwave = new solver::FWave();
 	}
 
-	/*virtual ~FWaveTest() {
-		fwave = NULL;
-	}*/
-
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 0<br>
+	 * hur = 0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testSameHeightNoSpeed(void) {
 		T startHeight = 5.0f;
 
@@ -40,6 +49,17 @@ public:
 		TS_ASSERT_EQUALS(hur, 0.0f);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = -2.0<br>
+	 * hur = -3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testSameHeightLeftSpeed(void) {
 		T startHeight = 5.0f;
 		T speedLeft = -2.0f;
@@ -56,6 +76,17 @@ public:
 		TS_ASSERT_DELTA(hur, -3.0196f, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 3.0<br>
+	 * hur = 2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testSameHeightRightSpeed(void) {
 		T startHeight = 5.0f;
 		T speedLeft = 3.0f;
@@ -72,6 +103,17 @@ public:
 		TS_ASSERT_DELTA(hur, -4.0196, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = -3.0<br>
+	 * hur = 2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testSameHeightLeftRightSpeed(void) {
 		T startHeight = 5.0f;
 		T speedLeft = -3.0f;
@@ -88,6 +130,17 @@ public:
 		TS_ASSERT_DELTA(hur, 17.0124, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 2.0<br>
+	 * hur = -3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testSameHeightRightLeftSpeed(void) {
 		T startHeight = 5.0f;
 		T speedLeft = 2.0f;
@@ -104,6 +157,17 @@ public:
 		TS_ASSERT_DELTA(hur, -17.0124, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 10.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 0<br>
+	 * hur = 0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testDecreasingHeightNoSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
@@ -121,6 +185,17 @@ public:
 		TS_ASSERT_DELTA(hur, -183.9375, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 10.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = -2.0<br>
+	 * hur = -3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testDecreasingHeightLeftSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
@@ -138,6 +213,17 @@ public:
 		TS_ASSERT_DELTA(hur, -179.7066, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 10.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 3.0<br>
+	 * hur = 2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testDecreasingHeightRightSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
@@ -155,6 +241,17 @@ public:
 		TS_ASSERT_DELTA(hur, -195.5929, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 10.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = -2.0<br>
+	 * hur = 3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testDecreasingHeightLeftRightSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
@@ -172,6 +269,17 @@ public:
 		TS_ASSERT_DELTA(hur, -164.6049, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 10.0<br>
+	 * hr = 5.0<br>
+	 * <br>
+	 * hul = 3.0<br>
+	 * hur = -2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testDecreasingHeightRightLeftSpeed(void) {
 		T heightLeft = 10.0f;
 		T heightRight = 5.0f;
@@ -189,6 +297,17 @@ public:
 		TS_ASSERT_DELTA(hur, -205.6470, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 10.0<br>
+	 * <br>
+	 * hul = 0<br>
+	 * hur = 0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testIncreasingHeightNoSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
@@ -206,6 +325,17 @@ public:
 		TS_ASSERT_DELTA(hur, 183.9375, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 10.0<br>
+	 * <br>
+	 * hul = -3.0<br>
+	 * hur = -2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testIncreasingHeightLeftSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
@@ -223,6 +353,17 @@ public:
 		TS_ASSERT_DELTA(hur, 179.7066, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 10.0<br>
+	 * <br>
+	 * hul = 2.0<br>
+	 * hur = 3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testIncreasingHeightRightSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
@@ -240,6 +381,17 @@ public:
 		TS_ASSERT_DELTA(hur, 195.5929, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 10.0<br>
+	 * <br>
+	 * hul = -3.0<br>
+	 * hur = 2.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testIncreasingHeightLeftRightSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
@@ -257,6 +409,17 @@ public:
 		TS_ASSERT_DELTA(hur, 201.8700, delta);
 	}
 
+	/**
+	 * Tests FWave#computeNetUpdates with the following parameters:<br>
+	 * hl = 5.0<br>
+	 * hr = 10.0<br>
+	 * <br>
+	 * hul = 2.0<br>
+	 * hur = -3.0<br>
+	 * <br>
+	 * bl = 0<br>
+	 * br = 0<br>
+	 */
 	void testIncreasingHeightRightLeftSpeed(void) {
 		T heightLeft = 5.0f;
 		T heightRight = 10.0f;
