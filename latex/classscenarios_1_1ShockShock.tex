@@ -1,0 +1,85 @@
+\hypertarget{classscenarios_1_1ShockShock}{}\section{scenarios\+:\+:Shock\+Shock Class Reference}
+\label{classscenarios_1_1ShockShock}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+
+
+{\ttfamily \#include $<$shockshock.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classscenarios_1_1ShockShock_a228368994c899142132fb9cfc4ed2691}{Shock\+Shock} (unsigned int size, T \hyperlink{classscenarios_1_1ShockShock_af2d811a5adab6c170e7666e26a7dedad}{velocity})
+\item 
+T \hyperlink{classscenarios_1_1ShockShock_a7b9e4cef9900e981fa9b634ee9d6b0ff}{get\+Height} (unsigned int pos)
+\item 
+T \hyperlink{classscenarios_1_1ShockShock_afa7ba0c8aec3c27dd2cddbe12a1bc7e9}{get\+Velocity} (unsigned int pos)
+\item 
+T \hyperlink{classscenarios_1_1ShockShock_a5d21aae3177a5b2279cc79133f082e30}{get\+Cell\+Size} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const unsigned int \hyperlink{classscenarios_1_1ShockShock_a0c230f6307041c3a79d3c78466320050}{m\+\_\+size}
+\item 
+T \hyperlink{classscenarios_1_1ShockShock_af2d811a5adab6c170e7666e26a7dedad}{velocity}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classscenarios_1_1ShockShock_a228368994c899142132fb9cfc4ed2691}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!Shock\+Shock@{Shock\+Shock}}
+\index{Shock\+Shock@{Shock\+Shock}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{Shock\+Shock}]{\setlength{\rightskip}{0pt plus 5cm}scenarios\+::\+Shock\+Shock\+::\+Shock\+Shock (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{size, }
+\item[{T}]{velocity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classscenarios_1_1ShockShock_a228368994c899142132fb9cfc4ed2691}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classscenarios_1_1ShockShock_a5d21aae3177a5b2279cc79133f082e30}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!get\+Cell\+Size@{get\+Cell\+Size}}
+\index{get\+Cell\+Size@{get\+Cell\+Size}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{get\+Cell\+Size}]{\setlength{\rightskip}{0pt plus 5cm}T scenarios\+::\+Shock\+Shock\+::get\+Cell\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classscenarios_1_1ShockShock_a5d21aae3177a5b2279cc79133f082e30}
+\begin{DoxyReturn}{Returns}
+Cell size of one cell (= domain size/number of cells) 
+\end{DoxyReturn}
+\hypertarget{classscenarios_1_1ShockShock_a7b9e4cef9900e981fa9b634ee9d6b0ff}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{get\+Height}]{\setlength{\rightskip}{0pt plus 5cm}T scenarios\+::\+Shock\+Shock\+::get\+Height (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classscenarios_1_1ShockShock_a7b9e4cef9900e981fa9b634ee9d6b0ff}
+\begin{DoxyReturn}{Returns}
+Initial water height at pos 
+\end{DoxyReturn}
+\hypertarget{classscenarios_1_1ShockShock_afa7ba0c8aec3c27dd2cddbe12a1bc7e9}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!get\+Velocity@{get\+Velocity}}
+\index{get\+Velocity@{get\+Velocity}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{get\+Velocity}]{\setlength{\rightskip}{0pt plus 5cm}T scenarios\+::\+Shock\+Shock\+::get\+Velocity (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classscenarios_1_1ShockShock_afa7ba0c8aec3c27dd2cddbe12a1bc7e9}
+\begin{DoxyReturn}{Returns}
+Initial momentum at pos
+\begin{DoxyItemize}
+\item momentum = movement from left to the right
+\end{DoxyItemize}
+\end{DoxyReturn}
+$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$$>$X$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$$<$ 
+
+\subsection{Member Data Documentation}
+\hypertarget{classscenarios_1_1ShockShock_a0c230f6307041c3a79d3c78466320050}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!m\+\_\+size@{m\+\_\+size}}
+\index{m\+\_\+size@{m\+\_\+size}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{m\+\_\+size}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned int scenarios\+::\+Shock\+Shock\+::m\+\_\+size\hspace{0.3cm}{\ttfamily [private]}}\label{classscenarios_1_1ShockShock_a0c230f6307041c3a79d3c78466320050}
+Number of cells \hypertarget{classscenarios_1_1ShockShock_af2d811a5adab6c170e7666e26a7dedad}{}\index{scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}!velocity@{velocity}}
+\index{velocity@{velocity}!scenarios\+::\+Shock\+Shock@{scenarios\+::\+Shock\+Shock}}
+\subsubsection[{velocity}]{\setlength{\rightskip}{0pt plus 5cm}T scenarios\+::\+Shock\+Shock\+::velocity\hspace{0.3cm}{\ttfamily [private]}}\label{classscenarios_1_1ShockShock_af2d811a5adab6c170e7666e26a7dedad}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{shockshock_8h}{shockshock.\+h}\end{DoxyCompactItemize}
