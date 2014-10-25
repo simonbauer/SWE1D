@@ -130,7 +130,9 @@ private:
 	T computeVeloRoe(Quantity &ql,Quantity &qr) {
 		T ul = ql.hu / ql.h;
 		T ur = qr.hu / qr.h;
-		return (ul * std::sqrt(ql.h) + ur * std::sqrt(qr.h)) / (std::sqrt(ql.h) + std::sqrt(qr.h));
+		T sqhl = std::sqrt(ql.h);
+		T sqhr = std::sqrt(qr.h);
+		return (ul * sqhl + ur * sqhr) / (sqhl + sqhr);
 	};
 
 	/**
@@ -191,6 +193,13 @@ private:
 
 	};
 
+	/**
+	 * Multiplicate eigencoefficient with eigenvector
+	 *
+	 * @param ec Eigencoefficient
+	 * @param lambda Wavespeed to corresponding eigenvector
+	 * @param out[2] output array of size 2, contains [ec, ec * lambda]^T
+	 */
 	void computeWaveZ(T ec, T lambda, T out[2]){
 		out[0] = ec;
 		out[1] = ec*lambda;
