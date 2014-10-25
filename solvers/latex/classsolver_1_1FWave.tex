@@ -1,0 +1,91 @@
+\hypertarget{classsolver_1_1FWave}{}\section{solver\+:\+:F\+Wave$<$ T $>$ Class Template Reference}
+\label{classsolver_1_1FWave}\index{solver\+::\+F\+Wave$<$ T $>$@{solver\+::\+F\+Wave$<$ T $>$}}
+
+
+{\ttfamily \#include $<$F\+Wave.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsolver_1_1FWave_1_1Quantity}{Quantity}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classsolver_1_1FWave_a446e2721d799afa5612a3a2b8c30d668}{F\+Wave} ()
+\item 
+void \hyperlink{classsolver_1_1FWave_a2e7f623f6dc6bd74f49af17dccafd7c7}{compute\+Net\+Updates} (const T \&hl, const T \&hr, const T \&hul, const T \&hur, const T \&bl, const T \&br, T \&outhl, T \&outhr, T \&outhul, T \&outhur, T \&outmax\+W\+S)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const T \hyperlink{classsolver_1_1FWave_ac3884c16c1822530961884e9f52304a2}{g} = 9.\+81f
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classsolver_1_1FWave_a446e2721d799afa5612a3a2b8c30d668}{}\index{solver\+::\+F\+Wave@{solver\+::\+F\+Wave}!F\+Wave@{F\+Wave}}
+\index{F\+Wave@{F\+Wave}!solver\+::\+F\+Wave@{solver\+::\+F\+Wave}}
+\subsubsection[{F\+Wave}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf solver\+::\+F\+Wave}$<$ T $>$\+::{\bf F\+Wave} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classsolver_1_1FWave_a446e2721d799afa5612a3a2b8c30d668}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classsolver_1_1FWave_a2e7f623f6dc6bd74f49af17dccafd7c7}{}\index{solver\+::\+F\+Wave@{solver\+::\+F\+Wave}!compute\+Net\+Updates@{compute\+Net\+Updates}}
+\index{compute\+Net\+Updates@{compute\+Net\+Updates}!solver\+::\+F\+Wave@{solver\+::\+F\+Wave}}
+\subsubsection[{compute\+Net\+Updates}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ void {\bf solver\+::\+F\+Wave}$<$ T $>$\+::compute\+Net\+Updates (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{hl, }
+\item[{const T \&}]{hr, }
+\item[{const T \&}]{hul, }
+\item[{const T \&}]{hur, }
+\item[{const T \&}]{bl, }
+\item[{const T \&}]{br, }
+\item[{T \&}]{outhl, }
+\item[{T \&}]{outhr, }
+\item[{T \&}]{outhul, }
+\item[{T \&}]{outhur, }
+\item[{T \&}]{outmax\+W\+S}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classsolver_1_1FWave_a2e7f623f6dc6bd74f49af17dccafd7c7}
+Compute left and right going net-\/updates.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&hl} & height on the left side of the edge. \\
+\hline
+{\em \&hr} & height on the right side of the edge. \\
+\hline
+{\em \&hul} & momentum on the left side of the edge. \\
+\hline
+{\em \&hur} & momentum on the right side of the edge. \\
+\hline
+{\em \&bl} & bathymetry on the left side of the edge. \\
+\hline
+{\em \&br} & bathymetry on the right side of the edge.\\
+\hline
+{\em \&outhl} & output height of the cell on the left side of the edge. \\
+\hline
+{\em \&outhr} & output height of the cell on the right side of the edge. \\
+\hline
+{\em \&outhul} & output momentum of the cell on the left side of the edge. \\
+\hline
+{\em \&outhur} & output momentum of the cell on the right side of the edge. \\
+\hline
+{\em \&outmax\+W\+S} & will be set to\+: Maximum (linearized) wave speed -\/$>$ Should be used in the C\+F\+L-\/condition. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classsolver_1_1FWave_ac3884c16c1822530961884e9f52304a2}{}\index{solver\+::\+F\+Wave@{solver\+::\+F\+Wave}!g@{g}}
+\index{g@{g}!solver\+::\+F\+Wave@{solver\+::\+F\+Wave}}
+\subsubsection[{g}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ const T {\bf solver\+::\+F\+Wave}$<$ T $>$\+::g = 9.\+81f\hspace{0.3cm}{\ttfamily [static]}}\label{classsolver_1_1FWave_ac3884c16c1822530961884e9f52304a2}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{FWave_8hpp}{F\+Wave.\+hpp}\end{DoxyCompactItemize}
