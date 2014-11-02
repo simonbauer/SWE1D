@@ -39,7 +39,7 @@
 		 * @param &outhur output momentum of the cell on the right side of the edge.
 		 * @param &outmaxWS will be set to: Maximum (linearized) wave speed -> Should be used in the CFL-condition.
 		 */
-		void computeNetUpdates(T &hl, T &hr, T &hul, T &hur, T &bl, T &br, T &outhl, T &outhr, T &outhul, T &outhur, T &outmaxWS) {
+		void computeNetUpdates(T hl, T hr, T hul, T hur, T bl, T br, T &outhl, T &outhr, T &outhul, T &outhur, T &outmaxWS) {
 			struct Quantity ql, qr;
 			ql.h = hl;
 			ql.hu = hul;
